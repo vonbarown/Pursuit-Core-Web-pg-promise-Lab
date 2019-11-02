@@ -2,22 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 //pg-promise setup
-const pgp = require('pg-promise')(); // import promise
-const connectionString = "postgres://localhost:5432/facebook_db" //URL where Postgres is running
-const db = pgp(connectionString); //connected db instance
+const {
+    db
+} = require('./database/pgPromiseFile'); //connected db instance
 
 router.get('/', async (req, res) => {
-    // db.any('SELECT * FROM users')
-    //     .then(rows => {
-    //         const response = {
-    //             users: rows
-    //         }
-    //         res.json(response);
-    //     })
-    //     .catch(function (error) {
-    //         res.json('An error occurred: ' + error);
-    //     });
-
     //using try-catch with async await
     try {
         let users = await db.any("SELECT * FROM users")
