@@ -23,18 +23,19 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:user_id', async (req, res) => {
-    // let userId = req.params.user_id;
+    let userId = Number(req.params.user_id);
+    try {
+        let specPost = await db.any('SELECT * FROM posts WHERE poster_id = $1', [userId])
+        res.json({
+            results: specPost,
+            message: "Success. Retrieved the posts"
+        })
 
-    // try {
-    //     let specPost = await db.any(`SELECT * FROM post WHERE post.id = ${req.params.user_id}`)
-    //     res.json({
-    //         results: specPost,
-    //         message: "Success. Retrieved the posts"
-    //     })
-
-    // } catch (error) {
-
-    // }
+    } catch (error) {
+        res.json({
+            message: `You took a wrong turn`
+        })
+    }
 
 });
 
