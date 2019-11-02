@@ -39,8 +39,22 @@ router.get('/:user_id', async (req, res) => {
 
 });
 
-router.post('/register', (req, res) => {
-    res.send('Creating new post!');
+router.post('/register', async (req, res) => {
+    try {
+        let insertQuery = `
+        INSERT INTO posts (poster_id,body)
+            VALUES($1, $2)`
+
+        await db.none(insertQuery, [req.body.poster_id, req.body.body])
+        res.json({
+            payload: req.body,
+            message: 'Post request has been'
+        })
+    } catch (error) {
+        res.json({
+            message: 'There was an error registering the post'
+        })
+    }
 });
 
 module.exports = router;
