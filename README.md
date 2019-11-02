@@ -1,6 +1,6 @@
 # Pursuit-Core-Web-pg-promise-Lab
 
-Continuing the starter project [here](), add the following features:
+Continuing the starter project [here](https://github.com/joinpursuit/Pursuit-Core-Web-pg-promise-Intro/tree/master), add the following features:
 
 ## 1. Posts
 
