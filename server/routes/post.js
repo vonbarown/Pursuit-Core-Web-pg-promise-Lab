@@ -54,6 +54,7 @@ router.post('/register', async (req, res) => {
         res.json({
             message: 'There was an error registering the post'
         })
+        console.log(error);
     }
 });
 
