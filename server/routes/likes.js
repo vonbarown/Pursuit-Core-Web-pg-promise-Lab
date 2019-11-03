@@ -22,6 +22,28 @@ router.get('/', async (req, res) => {
 
 });
 
+//this endpoint shows the post with the most likes
+router.get('/mostLiked', async (req, res) => {
+    try {
+        let insertQuery = `
+        SELECT COUNT(likes.id) AS times_liked, liker_id FROM likes
+        GROUP BY liker_id
+        ORDER BY times_liked DESC;
+        `
+        let congregLikes = await db.any(insertQuery)
+        res.json({
+            payload: congregLikes,
+            message: 'Success, request sent'
+        })
+    } catch (error) {
+        res.json({
+            message: 'There was an error registering the post'
+        })
+        console.log(error);
+    }
+});
+
+//finding the most liked post
 router.get('/popular', async (req, res) => {
     try {
         let insertQuery = `
@@ -45,6 +67,7 @@ router.get('/popular', async (req, res) => {
     }
 });
 
+//retrieve the number of times a post is liked
 router.get('/num', async (req, res) => {
     try {
         let insertQuery = `
@@ -67,6 +90,7 @@ router.get('/num', async (req, res) => {
     }
 });
 
+//get the post that a user liked
 router.get('/:liker_id', async (req, res) => {
     let likerId = Number(req.params.liker_id);
     try {
@@ -84,6 +108,27 @@ router.get('/:liker_id', async (req, res) => {
 
 });
 
+//this endpoint display users who have liked each post
+router.get('/liker/:post_id', async (req, res) => {
+    let postId = req.params.post_id;
+    try {
+        let insertQuery = `
+        SELECT * FROM likes JOIN users ON users.id = likes.liker_id WHERE post_id = $1
+        `
+        let congregLikes = await db.any(insertQuery, [postId])
+        res.json({
+            payload: congregLikes,
+            message: 'Success, request sent'
+        })
+    } catch (error) {
+        res.json({
+            message: 'There was an error registering the post'
+        })
+        console.log(error);
+    }
+});
+
+//allowing the user to like another users post
 router.post('/register', async (req, res) => {
     try {
         let insertQuery = `
