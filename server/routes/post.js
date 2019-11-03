@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 router.get('/:user_id', async (req, res) => {
     let userId = Number(req.params.user_id);
     try {
-        let specPost = await db.any('SELECT * FROM posts WHERE poster_id = $1', [userId])
+        let specPost = await db.any('SELECT body FROM posts WHERE poster_id = $1', [userId])
         res.json({
             results: specPost,
             message: "Success. Retrieved the posts"

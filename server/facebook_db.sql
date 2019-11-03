@@ -57,7 +57,26 @@ INSERT INTO likes (liker_id, post_id)
            (5,6),
            (3,10),
            (4,3);
+
+
+-- SELECT  posts.id AS post_id, COUNT(posts.id) AS times_liked
+--   from posts
+--   JOIN likes ON posts.id = likes.post_id
+--   GROUP BY posts.id
+--   ORDER BY times_liked DESC;
+
+SELECT * from users 
+  JOIN posts ON users.id = posts.poster_id  
+  WHERE posts.id = (
+    SELECT posts.id
+      FROM posts
+      JOIN likes ON posts.id = likes.post_id
+      GROUP BY posts.id
+      ORDER BY COUNT(posts.body) DESC
+      LIMIT 1
+  );
+
 -- Let's verify that the users and posts were inserted 
-SELECT * FROM users;
-SELECT * FROM posts;
-SELECT * FROM Likes;
+-- SELECT * FROM users;
+-- SELECT * FROM posts;
+-- SELECT * FROM Likes;
