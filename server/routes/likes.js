@@ -22,8 +22,8 @@ router.get('/', async (req, res) => {
 
 });
 
-//this endpoint shows the post with the most likes
-router.get('/mostLiked', async (req, res) => {
+//this endpoint shows the number of times a user liked something
+router.get('/likeCount', async (req, res) => {
     try {
         let insertQuery = `
         SELECT COUNT(likes.id) AS times_liked, liker_id FROM likes
@@ -84,7 +84,7 @@ router.get('/num', async (req, res) => {
         })
     } catch (error) {
         res.json({
-            message: 'There was an error registering the post'
+            message: 'There was an error  the retrieving data'
         })
         console.log(error);
     }
@@ -109,7 +109,7 @@ router.get('/:liker_id', async (req, res) => {
 });
 
 //this endpoint display users who have liked each post
-router.get('/liker/:post_id', async (req, res) => {
+router.get('/posts/:post_id', async (req, res) => {
     let postId = req.params.post_id;
     try {
         let insertQuery = `

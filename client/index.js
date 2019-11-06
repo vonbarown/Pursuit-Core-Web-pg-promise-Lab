@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPosts();
     const postForm = document.querySelector('#addPosts');
     postForm.addEventListener('submit', addPostsFormSubmitted);
+
+    loadNumOfLikes()
 });
 
 const loadUsers = async () => {
@@ -64,4 +66,19 @@ const addPostsFormSubmitted = async (event) => {
         body,
     });
     loadPosts();
+}
+
+const loadNumOfLikes = async () => {
+    // const postsList = document.querySelector('#postsList');
+    usersList.textContent = "";
+    const {
+        data
+    } = await axios.get(`http://localhost:${port}/likes/num`);
+    console.log(data);
+
+    // data.payload.forEach((user) => {
+    //     let listItem = document.createElement("li");
+    //     listItem.innerText = `User: ${user.poster_id}  Posted: ${user.body}`;
+    //     postsList.appendChild(listItem);
+    // });
 }
